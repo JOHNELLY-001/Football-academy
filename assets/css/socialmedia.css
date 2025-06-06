@@ -1,0 +1,105 @@
+ .social-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 3rem;
+            background: #1e4356;
+            min-height: 5vh;
+        }
+
+        .social-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* WhatsApp */
+        .whatsapp {
+            background: linear-gradient(45deg, #25D366, #128C7E);
+        }
+
+        /* Instagram */
+        .instagram {
+            background: linear-gradient(45deg, #405DE6, #833AB4, #C13584, #E1306C, #FD1D1D);
+        }
+
+        /* Facebook */
+        .facebook {
+            background: linear-gradient(45deg, #1877F2, #0A5F9E);
+        }
+
+        /* TikTok */
+        .tiktok {
+            background: linear-gradient(45deg, #000000, #FE2C55);
+        }
+
+        /* YouTube */
+        .youtube {
+            background: linear-gradient(45deg, #FF0000, #CC0000);
+        }
+
+        /* Hover Effects */
+        .social-icon:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .social-icon:hover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(255,255,255,0.1),
+                rgba(255,255,255,0.3),
+                rgba(255,255,255,0.1)
+            );
+            animation: shine 0.8s forwards;
+        }
+
+        @keyframes shine {
+            100% {
+                left: 200%;
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .social-container {
+                flex-wrap: wrap;
+                padding: 2rem;
+                gap: 1.5rem;
+            }
+
+            .social-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                border-radius: 12px;
+            }
+        }
+
+        /* Pulse Animation on Load */
+        @keyframes pulse {
+            0% { transform: scale(0.95); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .social-icon {
+            animation: pulse 0.5s ease-in-out;
+        }
