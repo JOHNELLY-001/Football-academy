@@ -56,30 +56,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Load hero video dynamically
   const videoElement = document.querySelector(".hero-video");
-  const sourceElement = videoElement.querySelector("source");
-  const defaultSrc = videoElement.getAttribute("data-default-src");
 
-  fetch('https://football-backend-h6ss.onrender.com/api/home-video/media')
+  if (!videoElement) {
+    console.error("Hero video element not found.");
+    return;
+  }
+
+  fetch("https://football-backend-h6ss.onrender.com/api/home-video/media")
     .then(response => {
-      if (!response.ok) throw new Error("Failed to load video metadata");
+      if (!response.ok) throw new Error(`HTTP ${response.status}: Failed to load hero video`);
       return response.json();
     })
-    .then(video => {
-      if (video && video.filename) {
-        sourceElement.src = video.url;
-      } else {
-        sourceElement.src = defaultSrc;
+    .then(videos => {
+      if (!Array.isArray(videos) || videos.length === 0) {
+        console.warn("No hero video found in the database.");
+        return;
       }
-      videoElement.load(); // Reload video with new source
+
+      const latestVideo = videos[0]; // assuming first is the newest
+      const sourceElement = videoElement.querySelector("source");
+
+      sourceElement.src = latestVideo.url;
+      videoElement.load(); // reload the video element with the new source
     })
     .catch(error => {
       console.error("Error loading hero video:", error);
-      sourceElement.src = defaultSrc;
-      videoElement.load();
     });
 });
+
 
 
 // fetchFounder.js
