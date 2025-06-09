@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  fetch('https://football-backend-h6ss.onrender.com/api/media/news')
+  fetch('https://football-backend-h6ss.onrender.com/api/news/media')
     .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -61,14 +61,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const sourceElement = videoElement.querySelector("source");
   const defaultSrc = videoElement.getAttribute("data-default-src");
 
-  fetch('https://football-backend-h6ss.onrender.com/api/media/home-video')
+  fetch('https://football-backend-h6ss.onrender.com/api/home-video/media')
     .then(response => {
       if (!response.ok) throw new Error("Failed to load video metadata");
       return response.json();
     })
     .then(video => {
       if (video && video.filename) {
-        sourceElement.src = `video.url`;
+        sourceElement.src = video.url;
       } else {
         sourceElement.src = defaultSrc;
       }
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("founder-container");
   const info = document.getElementById("founder-info");
 
-  fetch("https://football-backend-h6ss.onrender.com/api/media/founders") // Update this if your backend route differs
+  fetch("https://football-backend-h6ss.onrender.com/api/founders/media") // Update this if your backend route differs
     .then(response => {
       if (!response.ok) throw new Error("Failed to fetch founder data");
       return response.json();
@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Show image
         const img = document.createElement("img");
-        img.src = `founder.url`;
+        img.src = founder.url;
         img.alt = founder.name;
         img.className = "img-fluid";
         container.appendChild(img);
@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("coaches-container");
   const info = document.getElementById("coach-info");
 
-  fetch("https://football-backend-h6ss.onrender.com/api/media/coaches") // Make sure this route matches your backend
+  fetch("https://football-backend-h6ss.onrender.com/api/coaches/media") // Make sure this route matches your backend
     .then(response => {
       if (!response.ok) throw new Error("Failed to fetch coach data");
       return response.json();
@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Show image
         const img = document.createElement("img");
-        img.src = `coach.url`;
+        img.src = coach.url;
         img.alt = coach.name;
         img.className = "img-fluid";
         container.appendChild(img);
