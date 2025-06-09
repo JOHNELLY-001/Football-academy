@@ -1,41 +1,50 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const container = document.getElementById('events-container');
+  const container = document.getElementById("events-container");
 
   if (!container) {
-    console.error('Error: #events-container not found in the DOM.');
+    console.error("Error: #events-container not found in the DOM.");
     return;
   }
 
-  fetch('https://football-backend-h6ss.onrender.com/api/events/media')
-    .then(response => {
+  fetch("https://football-backend-h6ss.onrender.com/api/events/media")
+    .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       return response.json();
     })
-    .then(events => {
-      container.innerHTML = ''; // Clear existing content
+    .then((events) => {
+      container.innerHTML = ""; // Clear existing content
 
       if (!Array.isArray(events) || events.length === 0) {
-        container.innerHTML = '<p>No events found.</p>';
+        container.innerHTML = "<p>No events found.</p>";
         return;
       }
 
-      events.forEach(event => {
-        const card = document.createElement('div');
-        card.className = 'news-card fade-in';
+      events.forEach((event) => {
+        const card = document.createElement("div");
+        card.className = "news-card fade-in";
 
-        const imageSrc = event.url; // ✅ correct way
+        const isVideo = event.filetype && event.filetype.startsWith("video");
+        const mediaElement = isVideo
+          ? `
+            <video class="card-video" autoplay muted loop playsinline>
+              <source src="${event.url}" type="${event.filetype}">
+              Your browser does not support the video tag.
+            </video>
+          `
+          : `<img src="${event.url}" class="card-image" alt="${event.title}">`;
+
         const createdAt = new Date(event.created_at);
-        const formattedDate = createdAt.toLocaleDateString('en-GB', {
-          day: '2-digit',
-          month: 'short',
-          year: 'numeric'
+        const formattedDate = createdAt.toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
         });
 
         card.innerHTML = `
           <div class="image-container">
-            <img src="${imageSrc}" class="card-image" alt="${event.title}">
+            ${mediaElement}
             <div class="image-overlay"></div>
             <span class="time-ago" data-posted="${event.created_at}">${formattedDate}</span>
           </div>
@@ -48,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         container.appendChild(card);
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.error("Error loading events:", err);
       container.innerHTML = '<p style="color:red;">Failed to load events. Try again later.</p>';
     });
