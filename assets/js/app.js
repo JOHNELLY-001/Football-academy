@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const card = document.createElement('div');
         card.className = 'news-card fade-in';
 
-        const imageSrc = `event.url`;
+        const imageSrc = event.url; // ✅ correct way
         const createdAt = new Date(event.created_at);
         const formattedDate = createdAt.toLocaleDateString('en-GB', {
           day: '2-digit',
@@ -196,20 +196,31 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// fetchPlayers.js
 document.addEventListener("DOMContentLoaded", () => {
   const swiperWrapper = document.getElementById("player-swiper-wrapper");
 
-  fetch("https://football-backend-h6ss.onrender.com/api/media/players") // change URL if needed
+  if (!swiperWrapper) {
+    console.error("Player swiper wrapper not found in DOM.");
+    return;
+  }
+
+  const API_URL = "https://football-backend-h6ss.onrender.com/api/players/media";
+
+  fetch(API_URL)
     .then(response => {
-      if (!response.ok) throw new Error("Failed to fetch players");
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: Failed to fetch players`);
+      }
       return response.json();
     })
     .then(players => {
-      if (!players.length) {
+      if (!Array.isArray(players) || players.length === 0) {
         swiperWrapper.innerHTML = "<p>No players found.</p>";
         return;
       }
+
+      // Clear any existing slides
+      swiperWrapper.innerHTML = "";
 
       players.forEach(player => {
         const slide = document.createElement("div");
@@ -217,7 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         slide.innerHTML = `
           <div class="testimonial-item">
-            <img src="${player.url}" class="testimonial-img1" alt="${player.name}">
+            <img src="${player.url}" class="testimonial-img1" alt="${player.name || 'Player'}">
             <h4>${player.position || "Player"}</h4>
           </div>
         `;
@@ -225,13 +236,13 @@ document.addEventListener("DOMContentLoaded", () => {
         swiperWrapper.appendChild(slide);
       });
 
-      // Force Swiper to update if needed (if Swiper is already initialized)
-      if (window.swiperInstance && window.swiperInstance.update) {
+      // Update Swiper if it's initialized
+      if (window.swiperInstance?.update) {
         window.swiperInstance.update();
       }
     })
     .catch(error => {
-      console.error("Error fetching players:", error);
-      swiperWrapper.innerHTML = "<p>Failed to load players.</p>";
+      console.error("Error loading players:", error);
+      swiperWrapper.innerHTML = "<p style='color: red;'>Failed to load players.</p>";
     });
 });
