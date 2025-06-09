@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  fetch('http://localhost:3000/api/media')
+  fetch('https://football-backend-h6ss.onrender.com/api/media/news')
     .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const card = document.createElement('div');
         card.className = 'news-card fade-in';
 
-        const imageSrc = `http://localhost:3000/uploads/${event.filename}`;
+        const imageSrc = `event.url`;
         const createdAt = new Date(event.created_at);
         const formattedDate = createdAt.toLocaleDateString('en-GB', {
           day: '2-digit',
@@ -61,14 +61,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const sourceElement = videoElement.querySelector("source");
   const defaultSrc = videoElement.getAttribute("data-default-src");
 
-  fetch('http://localhost:3000/api/hero-video')
+  fetch('https://football-backend-h6ss.onrender.com/api/media/home-video')
     .then(response => {
       if (!response.ok) throw new Error("Failed to load video metadata");
       return response.json();
     })
     .then(video => {
       if (video && video.filename) {
-        sourceElement.src = `http://localhost:3000/uploads/videos/${video.filename}`;
+        sourceElement.src = `video.url`;
       } else {
         sourceElement.src = defaultSrc;
       }
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("founder-container");
   const info = document.getElementById("founder-info");
 
-  fetch("http://localhost:3000/api/founders") // Update this if your backend route differs
+  fetch("https://football-backend-h6ss.onrender.com/api/media/founders") // Update this if your backend route differs
     .then(response => {
       if (!response.ok) throw new Error("Failed to fetch founder data");
       return response.json();
@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Show image
         const img = document.createElement("img");
-        img.src = `http://localhost:3000/uploads/founders/${founder.filename}`;
+        img.src = `founder.url`;
         img.alt = founder.name;
         img.className = "img-fluid";
         container.appendChild(img);
@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("coaches-container");
   const info = document.getElementById("coach-info");
 
-  fetch("http://localhost:3000/api/coaches") // Make sure this route matches your backend
+  fetch("https://football-backend-h6ss.onrender.com/api/media/coaches") // Make sure this route matches your backend
     .then(response => {
       if (!response.ok) throw new Error("Failed to fetch coach data");
       return response.json();
@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Show image
         const img = document.createElement("img");
-        img.src = `http://localhost:3000/uploads/coaches/${coach.filename}`;
+        img.src = `coach.url`;
         img.alt = coach.name;
         img.className = "img-fluid";
         container.appendChild(img);
@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const swiperWrapper = document.getElementById("player-swiper-wrapper");
 
-  fetch("http://localhost:3000/api/players") // change URL if needed
+  fetch("https://football-backend-h6ss.onrender.com/api/media/players") // change URL if needed
     .then(response => {
       if (!response.ok) throw new Error("Failed to fetch players");
       return response.json();
@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         slide.innerHTML = `
           <div class="testimonial-item">
-            <img src="http://localhost:3000/uploads/players/${player.filename}" class="testimonial-img1" alt="${player.name}">
+            <img src="${player.url}" class="testimonial-img1" alt="${player.name}">
             <h4>${player.position || "Player"}</h4>
           </div>
         `;
