@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  fetch('https://football-backend-h6ss.onrender.com/api/news/media')
+  fetch('https://football-backend-h6ss.onrender.com/api/events/media')
     .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
