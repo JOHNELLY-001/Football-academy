@@ -174,39 +174,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("adminstration-container");
-  const info = document.getElementById("admin-info");
 
-  fetch("https://football-backend-h6ss.onrender.com/api/leaders/media") // adjust route if needed
+  if (!container) {
+    console.error("Administration container not found in DOM.");
+    return;
+  }
+
+  const API_URL = "https://football-backend-h6ss.onrender.com/api/adminstration/media";
+
+  fetch(API_URL)
     .then(response => {
-      if (!response.ok) throw new Error("Failed to fetch admin data");
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: Failed to fetch administration data`);
+      }
       return response.json();
     })
-    .then(data => {
-      if (data && data.length > 0) {
-        // Display all admins
-        data.forEach((member) => {
-          // Create and append image
-          const img = document.createElement("img");
-          img.src = member.url;
-          img.alt = member.name;
-          img.className = "img-fluid";
-          container.appendChild(img);
-        });
-
-        // Show info of the first admin or a general message
-        const first = data[0];
-        info.innerHTML = `
-          <h4>${first.name}</h4>
-          <span>${first.role || 'Support Staff'}</span>
-          <p>Fitness trainer, Academy coordinator</p>
-        `;
-      } else {
+    .then(admins => {
+      if (!Array.isArray(admins) || admins.length === 0) {
         container.innerHTML = "<p>No administration data found.</p>";
+        return;
       }
+
+      // Clear any previous content
+      container.innerHTML = "";
+
+      admins.forEach(member => {
+        const card = document.createElement("div");
+        card.className = "admin-card";
+
+        card.innerHTML = `
+          <img src="${member.url}" alt="${member.name || 'Admin'}">
+          <h4>${member.name || 'Unnamed'}</h4>
+          <span>${member.role || 'Support Staff'}</span>
+          <p>${member.description || 'Fitness trainer, Academy coordinator'}</p>
+        `;
+
+        container.appendChild(card);
+      });
     })
     .catch(error => {
-      console.error("Error fetching administration data:", error);
-      container.innerHTML = "<p>Failed to load administration data.</p>";
+      console.error("Error loading administration data:", error);
+      container.innerHTML = "<p style='color: red;'>Failed to load administration data.</p>";
     });
 });
 
