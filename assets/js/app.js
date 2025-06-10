@@ -264,7 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const logoLink = document.getElementById("logo-link");
 
-  fetch("https://football-backend-h6ss.onrender.com/api/media/logo")
+  fetch("https://football-backend-h6ss.onrender.com/api/logo/media")
     .then((res) => {
       if (!res.ok) throw new Error("Failed to fetch logo");
       return res.json();
