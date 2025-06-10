@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("adminstration-container");
   const info = document.getElementById("admin-info");
 
-  fetch("http://localhost:3000/api/adminstration") // adjust route if needed
+  fetch("https://football-backend-h6ss.onrender.com/api/leaders/media") // adjust route if needed
     .then(response => {
       if (!response.ok) throw new Error("Failed to fetch admin data");
       return response.json();
@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
         data.forEach((member) => {
           // Create and append image
           const img = document.createElement("img");
-          img.src = `http://localhost:3000/uploads/adminstration/${member.filename}`;
+          img.src = member.url;
           img.alt = member.name;
           img.className = "img-fluid";
           container.appendChild(img);
