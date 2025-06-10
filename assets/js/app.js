@@ -205,8 +205,8 @@ document.addEventListener("DOMContentLoaded", () => {
         card.innerHTML = `
           <img src="${member.url}" alt="${member.name || 'Admin'}">
           <h4>${member.name || 'Unnamed'}</h4>
-          <span>${member.role || 'Support Staff'}</span>
-          <p>${member.description || 'Fitness trainer, Academy coordinator'}</p>
+          <span>${member.title || 'Support Staff'}</span>
+          
         `;
 
         container.appendChild(card);
