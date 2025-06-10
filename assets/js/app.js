@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  const API_URL = "https://football-backend-h6ss.onrender.com/api/adminstration/media";
+  const API_URL = "https://football-backend-h6ss.onrender.com/api/leaders/media";
 
   fetch(API_URL)
     .then(response => {
