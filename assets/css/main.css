@@ -2688,3 +2688,7 @@ z-index: 1000;
   object-fit: cover;
 }
 
+.logogydo {
+  height: 40px;
+  object-fit: contain;
+}

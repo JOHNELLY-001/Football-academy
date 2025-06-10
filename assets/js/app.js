@@ -260,3 +260,30 @@ document.addEventListener("DOMContentLoaded", () => {
       swiperWrapper.innerHTML = "<p style='color: red;'>Failed to load players.</p>";
     });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const logoLink = document.getElementById("logo-link");
+
+  fetch("https://football-backend-h6ss.onrender.com/api/media/logo")
+    .then((res) => {
+      if (!res.ok) throw new Error("Failed to fetch logo");
+      return res.json();
+    })
+    .then((logos) => {
+      if (!Array.isArray(logos) || logos.length === 0) {
+        console.warn("No logo found in database.");
+        return;
+      }
+
+      const logo = logos[0]; // Get the first logo
+      const logoImg = document.createElement("img");
+      logoImg.src = logo.url;
+      logoImg.alt = "GAYDO";
+      logoImg.className = "logogydo"; // Keep existing class
+
+      logoLink.appendChild(logoImg);
+    })
+    .catch((err) => {
+      console.error("Error loading logo:", err);
+    });
+});
