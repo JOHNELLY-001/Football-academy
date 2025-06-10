@@ -172,31 +172,32 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// fetchAdmin.js
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("adminstration-container");
   const info = document.getElementById("admin-info");
 
-  fetch("http://localhost:3000/api/adminstration") // adjust route if different
+  fetch("http://localhost:3000/api/adminstration") // adjust route if needed
     .then(response => {
       if (!response.ok) throw new Error("Failed to fetch admin data");
       return response.json();
     })
     .then(data => {
       if (data && data.length > 0) {
-        const member = data[0]; // Only show the first admin staff
+        // Display all admins
+        data.forEach((member) => {
+          // Create and append image
+          const img = document.createElement("img");
+          img.src = `http://localhost:3000/uploads/adminstration/${member.filename}`;
+          img.alt = member.name;
+          img.className = "img-fluid";
+          container.appendChild(img);
+        });
 
-        // Show image
-        const img = document.createElement("img");
-        img.src = `http://localhost:3000/uploads/adminstration/${member.filename}`;
-        img.alt = member.name;
-        img.className = "img-fluid";
-        container.appendChild(img);
-
-        // Show info
+        // Show info of the first admin or a general message
+        const first = data[0];
         info.innerHTML = `
-          <h4>${member.name}</h4>
-          <span>${member.role || 'Support Staff'}</span>
+          <h4>${first.name}</h4>
+          <span>${first.role || 'Support Staff'}</span>
           <p>Fitness trainer, Academy coordinator</p>
         `;
       } else {
