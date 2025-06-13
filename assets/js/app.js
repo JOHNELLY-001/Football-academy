@@ -173,10 +173,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 document.addEventListener("DOMContentLoaded", () => {
+  const wrapper = document.getElementById("admin-scroll-wrapper");
   const container = document.getElementById("adminstration-container");
 
-  if (!container) {
-    console.error("Administration container not found in DOM.");
+  if (!container || !wrapper) {
+    console.error("Administration scroll elements not found in DOM.");
     return;
   }
 
@@ -195,21 +196,46 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Clear any previous content
-      container.innerHTML = "";
+      container.innerHTML = ""; // Clear old content
 
       admins.forEach(member => {
         const card = document.createElement("div");
         card.className = "admin-card";
-
         card.innerHTML = `
           <img src="${member.url}" alt="${member.name || 'Admin'}">
           <h4>${member.name || 'Unnamed'}</h4>
           <span>${member.title || 'Support Staff'}</span>
-          
         `;
-
         container.appendChild(card);
+      });
+
+      // Clone the container content before and after for infinite effect
+      const originalContent = container.innerHTML;
+
+      const cloneBefore = document.createElement("div");
+      cloneBefore.className = "scroll-container";
+      cloneBefore.innerHTML = originalContent;
+
+      const cloneAfter = document.createElement("div");
+      cloneAfter.className = "scroll-container";
+      cloneAfter.innerHTML = originalContent;
+
+      container.before(cloneBefore);
+      container.after(cloneAfter);
+
+      // Adjust initial scroll position to the original content
+      const containerWidth = container.offsetWidth;
+      wrapper.scrollLeft = cloneBefore.offsetWidth;
+
+      wrapper.addEventListener("scroll", () => {
+        const scrollLeft = wrapper.scrollLeft;
+        const totalWidth = cloneBefore.offsetWidth + container.offsetWidth;
+
+        if (scrollLeft <= 0) {
+          wrapper.scrollLeft = container.offsetWidth;
+        } else if (scrollLeft >= totalWidth) {
+          wrapper.scrollLeft = cloneBefore.offsetWidth;
+        }
       });
     })
     .catch(error => {
