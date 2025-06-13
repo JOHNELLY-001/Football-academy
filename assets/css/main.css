@@ -2637,6 +2637,8 @@ section,
   color: color-mix(in srgb, var(--default-color), transparent 60%);
   font-size: 14px;
 }
+
+/* Hero section in the homepage */
 .hero-video {
   position: absolute;
   top: 0;
@@ -2657,6 +2659,8 @@ section,
   border-radius: 0 0 50% 50%;
   transform: translateX(-50%) rotate(0deg);
 }
+
+/* The logo in every page */
 .logocontainer{
 position: fixed;
 top: 20px;
@@ -2681,6 +2685,7 @@ z-index: 1000;
   transition: all 0.4s ease-in-out;
 }
 
+/* Yhe cards in the team page */
 .card-video,
 .card-image {
   width: 100%;
@@ -2693,24 +2698,24 @@ z-index: 1000;
   object-fit: contain;
 }
 
-.scroll-container {
+/* .scroll-container {
   display: flex;
   overflow-x: auto;
   gap: 20px;
   padding: 20px;
   justify-content: center;
-}
+} */
 
-.admin-card {
-  min-width: 220px;
-  max-width: 240px;
+/* .admin-card {
+  min-width: 250px;
+  max-width: 270px;
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   text-align: center;
   padding: 15px;
   flex-shrink: 0;
-}
+} */
 
 .admin-card img {
   width: 100%;
@@ -2734,4 +2739,27 @@ z-index: 1000;
 .admin-card p {
   font-size: 0.85rem;
   color: #555;
+}
+
+.scroll-wrapper {
+  overflow-x: auto;
+  white-space: nowrap;
+  width: 100%;
+  scroll-behavior: smooth;
+}
+
+.scroll-container {
+  display: inline-flex;
+  gap: 20px;
+}
+
+.admin-card {
+  min-width: 250px;
+  max-width: 270px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  padding: 15px;
+  flex-shrink: 0;
 }
