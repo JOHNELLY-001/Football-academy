@@ -111,15 +111,23 @@
     <!-- Administration / Support Team Section -->
 <div class="col-lg-12 member" data-aos="fade-up" data-aos-delay="300">
   <div class="member-img">
-    <!-- Wrapper for infinite scroll effect -->
-    <div id="admin-scroll-wrapper" class="scroll-wrapper">
-      <div id="adminstration-container" class="scroll-container">
-        <!-- Populated by JS -->
-      </div>
+    <!-- No infinite scroll wrapper, just the original container -->
+    <div id="adminstration-container" class="scroll-container">
+      <!-- Populated by JS -->
     </div>
   </div>
   <div class="member-info text-center" id="admin-info">
     <!-- Populated by JS -->
+  </div>
+</div>
+
+<!-- Modal Popup -->
+<div id="admin-modal" class="admin-modal hidden">
+  <div class="admin-modal-content">
+    <span class="admin-modal-close">&times;</span>
+    <img id="modal-img" src="" alt="">
+    <h4 id="modal-name"></h4>
+    <span id="modal-title"></span>
   </div>
 </div>
   </div>
