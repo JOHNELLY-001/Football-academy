@@ -173,10 +173,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 document.addEventListener("DOMContentLoaded", () => {
+  const wrapper = document.getElementById("admin-scroll-wrapper");
   const container = document.getElementById("adminstration-container");
 
-  if (!container) {
-    console.error("Administration container not found in DOM.");
+  if (!container || !wrapper) {
+    console.error("Required elements not found.");
     return;
   }
 
@@ -185,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
   fetch(API_URL)
     .then(response => {
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: Failed to fetch administration data`);
+        throw new Error(`HTTP ${response.status}: Failed to fetch data`);
       }
       return response.json();
     })
@@ -195,6 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      // Clear container
       container.innerHTML = "";
 
       admins.forEach(member => {
@@ -207,18 +209,42 @@ document.addEventListener("DOMContentLoaded", () => {
           <span>${member.title || 'Support Staff'}</span>
         `;
 
-        // Add click listener to open modal
         card.addEventListener("click", () => openModal(member));
-
         container.appendChild(card);
+      });
+
+      // Infinite scroll setup
+      const originalHTML = container.innerHTML;
+
+      const cloneBefore = document.createElement("div");
+      cloneBefore.className = "scroll-container";
+      cloneBefore.innerHTML = originalHTML;
+
+      const cloneAfter = document.createElement("div");
+      cloneAfter.className = "scroll-container";
+      cloneAfter.innerHTML = originalHTML;
+
+      container.before(cloneBefore);
+      container.after(cloneAfter);
+
+      const cloneWidth = cloneBefore.offsetWidth;
+      wrapper.scrollLeft = cloneWidth;
+
+      wrapper.addEventListener("scroll", () => {
+        const totalScroll = cloneWidth + container.offsetWidth;
+        if (wrapper.scrollLeft <= 0) {
+          wrapper.scrollLeft = cloneWidth;
+        } else if (wrapper.scrollLeft >= totalScroll) {
+          wrapper.scrollLeft = cloneWidth;
+        }
       });
     })
     .catch(error => {
       console.error("Error loading administration data:", error);
-      container.innerHTML = "<p style='color: red;'>Failed to load administration data.</p>";
+      container.innerHTML = "<p style='color: red;'>Failed to load data.</p>";
     });
 
-  // Modal handling
+  // Modal logic
   const modal = document.getElementById("admin-modal");
   const modalImg = document.getElementById("modal-img");
   const modalName = document.getElementById("modal-name");
@@ -236,7 +262,6 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.classList.add("hidden");
   });
 
-  // Optional: close modal on outside click
   modal.addEventListener("click", (e) => {
     if (e.target === modal) {
       modal.classList.add("hidden");
