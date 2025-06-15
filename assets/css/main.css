@@ -2742,13 +2742,13 @@ z-index: 1000;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   text-align: center;
-  padding: 0px;
+  padding: 12px;
   flex-shrink: 0;
   cursor: pointer;
 }
 
 .admin-card img {
-  width: 100%;
+  width: 50%;
   height: 200px;
   object-fit: cover;
   border-radius: 8px;
@@ -2756,7 +2756,7 @@ z-index: 1000;
 
 .admin-card h4 {
   margin-top: 10px;
-  font-size: 1.1rem;
+  font-size: 1.0rem;
   font-weight: bold;
 }
 
@@ -2791,7 +2791,7 @@ z-index: 1000;
 }
 
 .admin-modal-content img {
-  width: 100%;
+  width: 50%;
   height: auto;
   max-height: 250px;
   object-fit: cover;
@@ -2800,10 +2800,23 @@ z-index: 1000;
 
 .admin-modal-close {
   position: absolute;
-  top: 10px;
+  top: 12px;
   right: 15px;
-  font-size: 24px;
   cursor: pointer;
+}
+
+#modal-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  color: #1a202c; /* dark gray */
+}
+
+#modal-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #4a5568; /* medium gray */
+  margin-bottom: 1rem;
 }
 
 .hidden {
