@@ -347,3 +347,32 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error loading logo:", err);
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const container = document.getElementById("news-container");
+
+  // Simulating a backend API call
+  fetch("https://football-backend-h6ss.onrender.com/api/news/media")
+  .then(response => response.json())
+  .then(newsData => {
+    newsData.forEach(news =>{
+      const card = document.createElement("div");
+      card.className = "news-card fade-in";
+
+      card.innerHTML = `
+      <div class="image-container">
+      ${news.url ? `<img src="${news.url}" class="card-image" alt="${news.category}">` : ""}
+      <div class="image-overlay"></div>
+      <span class="time-ago" data-posted="${news.date}">${news.date}</span>
+      </div>
+      <div class="card-content"> <h3 class="news-title">${news.title}</h3>
+      <p class="news-excerpt">${news.description}</p> </div>`;
+
+      container.appendChild(card);
+    });
+  })
+  .catch(error => {
+    console.error("Error loading news:", error);
+    container.innerHTML = "<p> Failed to load news</p>";
+  });
+});
