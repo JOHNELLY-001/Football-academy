@@ -2822,3 +2822,49 @@ z-index: 1000;
 .hidden {
   display: none;
 }
+
+  .news-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+  }
+  .news-card:hover {
+    transform: translateY(-4px);
+  }
+  .image-container {
+    position: relative;
+  }
+  .card-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+  }
+  .image-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.6));
+  }
+  .time-ago {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: #fff;
+    background: #0009;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+  }
+  .card-content {
+    padding: 15px;
+  }
+  .news-title {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+  .news-excerpt {
+    font-size: 0.95rem;
+    color: #555;
+  }
