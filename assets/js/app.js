@@ -348,31 +348,40 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  const container = document.getElementById("news-container");
 
-  // Simulating a backend API call
-  fetch("https://football-backend-h6ss.onrender.com/api/news/media")
-  .then(response => response.json())
-  .then(newsData => {
-    newsData.forEach(news =>{
-      const card = document.createElement("div");
-      card.className = "news-card fade-in";
+  document.addEventListener("DOMContentLoaded", function () {
+    const container = document.getElementById("news-container");
 
-      card.innerHTML = `
-      <div class="image-container">
-      ${news.url ? `<img src="${news.url}" class="card-image" alt="${news.category}">` : ""}
-      <div class="image-overlay"></div>
-      <span class="time-ago" data-posted="${news.date}">${news.date}</span>
-      </div>
-      <div class="card-content"> <h3 class="news-title">${news.title}</h3>
-      <p class="news-excerpt">${news.description}</p> </div>`;
+    fetch("https://football-backend-h6ss.onrender.com/api/news/media")
+      .then(response => response.json())
+      .then(newsData => {
+        newsData.forEach(news => {
+          const card = document.createElement("div");
+          card.className = "col-lg-4"; // Bootstrap 3-column layout
 
-      container.appendChild(card);
-    });
-  })
-  .catch(error => {
-    console.error("Error loading news:", error);
-    container.innerHTML = "<p> Failed to load news</p>";
+          card.innerHTML = `
+            <article class="news-card fade-in">
+              <div class="image-container">
+                ${news.url ? `<img src="${news.url}" class="card-image" alt="${news.category}">` : ""}
+                <div class="image-overlay"></div>
+                <span class="time-ago" data-posted="${news.date}">
+                  ${new Date(news.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                </span>
+              </div>
+              <div class="card-content">
+                <p class="post-category">${news.category}</p>
+                <h3 class="news-title">${news.title}</h3>
+                <p class="news-excerpt">${news.description}</p>
+              </div>
+            </article>
+          `;
+
+          container.appendChild(card);
+        });
+      })
+      .catch(error => {
+        console.error("Error loading news:", error);
+        container.innerHTML = "<p>Failed to load news</p>";
+      });
   });
-});
+
