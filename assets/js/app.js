@@ -23,9 +23,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       events.forEach((event) => {
         const card = document.createElement("div");
-        card.className = "news-card fade-in";
+        
+        const isVideo = event.filetype?.startsWith("video");
 
-        const isVideo = event.filetype && event.filetype.startsWith("video");
         const mediaElement = isVideo
           ? `
             <video class="card-video" autoplay muted loop playsinline>
@@ -33,35 +33,42 @@ document.addEventListener("DOMContentLoaded", () => {
               Your browser does not support the video tag.
             </video>
           `
-          : `<img src="${event.url}" class="card-image" alt="${event.title}">`;
+          : event.url
+            ? `<img src="${event.url}" class="card-image" alt="${event.title || 'Event'}">`
+            : "";
 
-        const createdAt = new Date(event.created_at);
-        const formattedDate = createdAt.toLocaleDateString("en-GB", {
-          day: "2-digit",
-          month: "short",
+        const formattedDate = new Date(event.created_at).toLocaleDateString("en-US", {
           year: "numeric",
+          month: "short",
+          day: "numeric"
         });
 
         card.innerHTML = `
-          <div class="image-container">
-            ${mediaElement}
-            <div class="image-overlay"></div>
-            <span class="time-ago" data-posted="${event.created_at}">${formattedDate}</span>
-          </div>
-          <div class="card-content">
-            <h3 class="news-title">${event.title}</h3>
-            <p class="news-excerpt">${event.description}</p>
-          </div>
+          <article class="news-card fade-in">
+            <div class="image-containerr">
+              ${mediaElement}
+              <div class="image-overlay"></div>
+              <span class="time-ago" data-posted="${event.created_at}">
+                ${formattedDate}
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="post-category">Event</p>
+              <h3 class="news-title">${event.title || "Untitled Event"}</h3>
+              <p class="news-excerpt">${event.description || "No description available."}</p>
+            </div>
+          </article>
         `;
 
         container.appendChild(card);
       });
     })
-    .catch((err) => {
-      console.error("Error loading events:", err);
-      container.innerHTML = '<p style="color:red;">Failed to load events. Try again later.</p>';
+    .catch((error) => {
+      console.error("Error loading events:", error);
+      container.innerHTML = `<p style="color:red;">Failed to load events. Try again later.</p>`;
     });
 });
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
