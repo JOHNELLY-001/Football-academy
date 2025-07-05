@@ -1290,42 +1290,6 @@ section,
   transform: scale(1.1);
 }
 
-/*--------------------------------------------------------------
-# Skills Section
---------------------------------------------------------------*/
-/* .skills .progress {
-  height: 60px;
-  display: block;
-  background: none;
-  border-radius: 0;
-}
-
-.skills .progress .skill {
-  color: var(--heading-color);
-  padding: 0;
-  margin: 0 0 6px 0;
-  text-transform: uppercase;
-  display: block;
-  font-weight: 600;
-  font-family: var(--heading-font);
-}
-
-.skills .progress .skill .val {
-  float: right;
-  font-style: normal;
-}
-
-.skills .progress-bar-wrap {
-  background: color-mix(in srgb, var(--default-color), transparent 90%);
-  height: 10px;
-}
-
-.skills .progress-bar {
-  width: 1px;
-  height: 10px;
-  transition: 0.9s;
-  background-color: var(--accent-color);
-} */
 
 /*--------------------------------------------------------------
 # Testimonials Section
@@ -2929,4 +2893,40 @@ z-index: 1000;
   .card-video {
     height: 180px;
   }
+}
+
+#staffbench-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.staff-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#staff-info {
+  text-align: center;
+}
+
+.staff-name {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.staff-title {
+  color: #666;
+  font-style: italic;
+  display: block;
+  margin: 0.5rem 0;
+}
+
+.staff-bio {
+  max-width: 500px;
+  margin: 0 auto;
+  font-size: 0.95rem;
+  color: #444;
 }
