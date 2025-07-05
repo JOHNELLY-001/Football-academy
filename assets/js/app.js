@@ -101,6 +101,41 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+// fetchstaffbench
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("staffbench-container");
+  const info = document.getElementById("staff-info"); // Add this element in your HTML
+
+  fetch("https://football-backend-h6ss.onrender.com/api/staffbench/media")
+    .then(response => {
+      if (!response.ok) throw new Error("Failed to fetch staffbench data");
+      return response.json();
+    })
+    .then(data => {
+      if (data && data.length > 0) {
+        const coach = data[0]; // Only display the first coach
+
+        // Show image
+        const img = document.createElement("img");
+        img.src = coach.url;
+        img.alt = coach.name;
+        img.className = "staff-img";
+        container.appendChild(img);
+
+        // Show info
+        info.innerHTML = `
+          <h4 class="staff-name">${coach.name}</h4>
+          <span class="staff-title">${coach.position}</span>
+        `;
+      } else {
+        container.innerHTML = "<p>No coach data found.</p>";
+      }
+    })
+    .catch(error => {
+      console.error("Error fetching coach:", error);
+      container.innerHTML = "<p>Failed to load coach data.</p>";
+    });
+});
 
 
 // fetchFounder.js
@@ -108,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("founder-container");
   const info = document.getElementById("founder-info");
 
-  fetch("https://football-backend-h6ss.onrender.com/api/founders/media") // Update this if your backend route differs
+  fetch("https://football-backend-h6ss.onrender.com/api/founders/media") 
     .then(response => {
       if (!response.ok) throw new Error("Failed to fetch founder data");
       return response.json();
@@ -146,7 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("coaches-container");
   const info = document.getElementById("coach-info");
 
-  fetch("https://football-backend-h6ss.onrender.com/api/coaches/media") // Make sure this route matches your backend
+  fetch("https://football-backend-h6ss.onrender.com/api/coaches/media") 
     .then(response => {
       if (!response.ok) throw new Error("Failed to fetch coach data");
       return response.json();
@@ -166,7 +201,6 @@ document.addEventListener("DOMContentLoaded", () => {
         info.innerHTML = `
           <h4>${coach.name}</h4>
           <span>${coach.title}</span>
-          <p>Skilled in technical training, tactics, and fitness development.</p>
         `;
       } else {
         container.innerHTML = "<p>No coach data found.</p>";
