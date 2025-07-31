@@ -253,32 +253,6 @@ document.addEventListener("DOMContentLoaded", () => {
         card.addEventListener("click", () => openModal(member));
         container.appendChild(card);
       });
-
-      // Infinite scroll setup
-      const originalHTML = container.innerHTML;
-
-      const cloneBefore = document.createElement("div");
-      cloneBefore.className = "scroll-container";
-      cloneBefore.innerHTML = originalHTML;
-
-      const cloneAfter = document.createElement("div");
-      cloneAfter.className = "scroll-container";
-      cloneAfter.innerHTML = originalHTML;
-
-      container.before(cloneBefore);
-      container.after(cloneAfter);
-
-      const cloneWidth = cloneBefore.offsetWidth;
-      wrapper.scrollLeft = cloneWidth;
-
-      wrapper.addEventListener("scroll", () => {
-        const totalScroll = cloneWidth + container.offsetWidth;
-        if (wrapper.scrollLeft <= 0) {
-          wrapper.scrollLeft = cloneWidth;
-        } else if (wrapper.scrollLeft >= totalScroll) {
-          wrapper.scrollLeft = cloneWidth;
-        }
-      });
     })
     .catch(error => {
       console.error("Error loading administration data:", error);
@@ -309,7 +283,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-
 
 document.addEventListener("DOMContentLoaded", () => {
   const swiperWrapper = document.getElementById("player-swiper-wrapper");
